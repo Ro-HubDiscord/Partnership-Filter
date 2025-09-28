@@ -52,7 +52,7 @@
             let lines = input.split('\n').filter(line => line.trim() !== '');
 
             // Convert each line to list markdown
-            let output = lines.map(line => '- ' + line.trim()).join('\n');
+            let output = lines.map(line => '' + line.trim()).join('\n');
 
             document.getElementById('outputText').value = output;
         }
