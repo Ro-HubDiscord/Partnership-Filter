@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Filter to List Markdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            max-width: 800px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Filter to List Markdown</h1>
+    <p>Paste your text below and click "Transform" to get a clean list markdown version.</p>
+
+    <textarea id="inputText" placeholder="Paste your text here..."></textarea>
+    <button onclick="transformText()">Transform</button>
+    <textarea id="outputText" placeholder="Output will appear here..." readonly></textarea>
+
+    <script>
+        function transformText() {
+            let input = document.getElementById('inputText').value;
+
+            // Remove emojis
+            input = input.replace(/[\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+
+            // Remove markdown links: [text](url) -> text
+            input = input.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1');
+
+            // Split into lines, remove empty lines
+            let lines = input.split('\n').filter(line => line.trim() !== '');
+
+            // Convert each line to list markdown
+            let output = lines.map(line => '- ' + line.trim()).join('\n');
+
+            document.getElementById('outputText').value = output;
+        }
+    </script>
+</body>
+</html>
