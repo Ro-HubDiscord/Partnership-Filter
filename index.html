@@ -41,6 +41,13 @@
             // Remove markdown links: [text](url) -> text
             input = input.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1');
 
+            // Remove banned words/phrases
+            const bannedWords = ['▬▬▬▬'];
+            bannedWords.forEach(word => {
+                const regex = new RegExp(word, 'g');
+                input = input.replace(regex, '');
+            });
+
             // Split into lines, remove empty lines
             let lines = input.split('\n').filter(line => line.trim() !== '');
 
